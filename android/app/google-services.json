@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "469655636031",
+    "project_id": "karthik-map",
+    "storage_bucket": "karthik-map.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:469655636031:android:93a1e06f91c33e0aa8108a",
+        "android_client_info": {
+          "package_name": "com.example.map.kartihk_map"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "469655636031-g9kkfvg9gfb7q7nsrvsairf33gcrr5h8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtkaeWvbBzKfoL9EZwF2nAbRcMdEwTbMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "469655636031-g9kkfvg9gfb7q7nsrvsairf33gcrr5h8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
