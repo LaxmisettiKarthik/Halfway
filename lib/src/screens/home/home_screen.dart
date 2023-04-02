@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: MaterialButton(
             color: CustomColor.blueColor,
             onPressed: () {
-              Navigator.pushNamed(context, MyRouters.mapScreen);
+              Navigator.pushNamed(context, MyRouters.mapMyIndiaScreen);
             },
             child: Text(
               "Go to Map",
