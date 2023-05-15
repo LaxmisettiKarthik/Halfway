@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mapmyindia_place_widget/mapmyindia_place_widget.dart';
+//import 'package:mapmyindia_place_widget/mapmyindia_place_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../viwModel/map_my_india_provider.dart';
@@ -15,7 +15,7 @@ class PlaceSearchWidget extends StatefulWidget {
 }
 
 class PlaceSearchWidgetState extends State {
-  ELocation _eLocation = ELocation();
+ // ELocation _eLocation = ELocation();
   late MapMyIndiaProvider provider;
   TextEditingController textController = TextEditingController();
 

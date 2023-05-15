@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kartihk_map/src/app/my_routers.dart';
 import 'package:kartihk_map/src/app/shared_preferences_helper.dart';
 import 'package:kartihk_map/src/constants/custom_colors.dart';
+import 'package:kartihk_map/src/screens/login/signin.dart';
 import 'package:kartihk_map/src/utils/toast_helper.dart';
 import 'package:kartihk_map/src/viwModel/login_provider.dart';
 
@@ -22,29 +23,41 @@ class LoginScreen extends StatelessWidget {
               onTap: () {
                 _googleLogin(context);
               },
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: CustomColor.colorWhite),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      "assets/icons/google_icon.png",
-                      height: 30,
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: CustomColor.colorWhite),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "assets/icons/google_icon.png",
+                          height: 30,
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        const Text(
+                          "Continue with Google",
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      "Continue with Google",
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => SignIn()),
+                      );
+                    },
+                    child: const Text("Sign via Email"),
+                  ),
+                ],
               ),
             ),
           ),

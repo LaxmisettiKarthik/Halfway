@@ -18,8 +18,11 @@ class MyRouters {
 
   static const String mapMyIndiaScreen = "/map_my_screen";
 
-  static const String mapMyIndiaPlaceSearchScreen =
-      "/map_my_screen_place_search";
+  static const String mapMyIndiaPlaceSearchScreen = "/map_my_screen_place_search";
+
+  static const String OnBoardingScreen  = "/onboard";
+
+  
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -37,12 +40,12 @@ class MyRouters {
               return const HomeScreen();
             });
 
-      case googleMapScreen:
-        return MaterialPageRoute(
-            settings: const RouteSettings(name: googleMapScreen),
-            builder: (context) {
-              return const MapScreen();
-            });
+      // case googleMapScreen:
+      //   return MaterialPageRoute(
+      //       settings: const RouteSettings(name: googleMapScreen),
+      //       builder: (context) {
+      //         return const MapScreen();
+      //       });
 
       case mapMyIndiaScreen:
         return MaterialPageRoute(
@@ -57,6 +60,7 @@ class MyRouters {
             builder: (context) {
               return const PlaceSearchWidget();
             });
+            
 
       default:
         return MaterialPageRoute(
