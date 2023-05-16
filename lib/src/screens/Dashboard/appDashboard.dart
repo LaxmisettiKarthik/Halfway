@@ -91,10 +91,18 @@ class _AppDashboardState extends State<AppDashboard> {
                                   const SizedBox(
                                     width: 20,
                                   ),
-                                  const Icon(
+                                  GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (_) => Sample()),
+                                    );
+                                  },
+                                  child: const Icon(
                                     Icons.menu_outlined,
                                     size: 35,
                                   ),
+                                ),
                                   const SizedBox(
                                     width: 122,
                                   ),

@@ -133,7 +133,7 @@ class _SignInState extends State<SignIn> {
                   if (user != "null") {
                     print(user);
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => Navbar()),
+                      MaterialPageRoute(builder: (_) => RegistrationPage()),
                     );
                   } else {
                     print(user);

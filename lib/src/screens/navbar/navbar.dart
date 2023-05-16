@@ -17,7 +17,8 @@ class Navbar extends StatefulWidget {
 
 class _NavbarState extends State<Navbar> {
   int _page = 1;
-  final List<Widget> _children = [    
+  final List<Widget> _children = [ 
+    Miscellaneous(),   
     AppDashboard(),
     DragBar(),
   ];
