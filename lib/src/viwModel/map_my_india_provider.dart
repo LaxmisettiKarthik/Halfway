@@ -32,4 +32,10 @@ class MapMyIndiaProvider extends ChangeNotifier {
     placeList = [];
     notifyListeners();
   }
+
+  moveToCurrentLocation(double lat, double long) {
+    mapController.moveCamera(CameraUpdate.newLatLng(LatLng(lat, long)));
+    placeList = [];
+    notifyListeners();
+  }
 }

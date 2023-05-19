@@ -26,12 +26,11 @@ class PlaceSearchWidgetState extends State {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.white,
-        brightness: Brightness.dark,
         title: const Text(
           'Place Search',
           style: TextStyle(color: Colors.white),
         ),
-        elevation: 0.2,
+        elevation: 0.2, systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: Column(
         children: [
@@ -82,7 +81,9 @@ class PlaceSearchWidgetState extends State {
                           })))
               : Container()
         ],
+        
       ),
     );
   }
+
 }

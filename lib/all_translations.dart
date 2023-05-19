@@ -21,7 +21,7 @@ class GlobalTranslations {
   /// Returns the list of supported Locales
   ///
   Iterable<Locale> supportedLocales() =>
-      _supportedLanguages.map<Locale>((lang) => new Locale(lang, ''));
+      _supportedLanguages.map<Locale>((lang) => Locale(lang, ''));
 
   ///
   /// Returns the translation that corresponds to the [key]

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:kartihk_map/src/app/mediaquery_class.dart';
 import 'package:kartihk_map/src/app/my_routers.dart';
 import 'package:kartihk_map/src/constants/custom_colors.dart';
 import 'package:kartihk_map/src/viwModel/map_my_india_provider.dart';
 import 'package:mapmyindia_gl/mapmyindia_gl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-
-
+import '../../../all_translations.dart';
+import '../../utils/toast_helper.dart';
 
 class MapMyIndiaScreen extends StatefulWidget {
   const MapMyIndiaScreen({Key? key}) : super(key: key);
@@ -20,8 +22,8 @@ class _MapMyIndiaScreenState extends State<MapMyIndiaScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _getCurrentLocation();
   }
 
   @override
@@ -31,12 +33,18 @@ class _MapMyIndiaScreenState extends State<MapMyIndiaScreen> {
       body: Stack(
         children: [
           MapmyIndiaMap(
+            //myLocationEnabled: true,
+            compassEnabled: true,
+            myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
+            myLocationRenderMode: MyLocationRenderMode.GPS,
             initialCameraPosition: const CameraPosition(
-              target: LatLng(25.321684, 82.987289),
+              target: LatLng(17.424452, 78.432621),
               zoom: 14.0,
             ),
             onMapCreated: (map) => {
               provider.mapController = map,
+              _getCurrentLocation(),
+              _addCurrentLocationSymbol(),
             },
           ),
           SafeArea(
@@ -64,4 +72,44 @@ class _MapMyIndiaScreenState extends State<MapMyIndiaScreen> {
       ),
     );
   }
+
+  Future<bool> checkPermissionForCurrentLocation() async {
+    bool? serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ToastHelper.showToast(allTranslations.text('Your location is off.'));
+    } else {
+      Map<Permission, PermissionStatus> statuses = await [
+        Permission.location,
+      ].request();
+      print(statuses[Permission.location]);
+      var status = await Permission.location.status;
+      if (status.isGranted) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  Future<void> _getCurrentLocation() async {
+    bool locationStatus = await checkPermissionForCurrentLocation();
+    if (locationStatus == false) {
+      return;
+    }
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    print("Latitude: ${position.latitude}, Longitude: ${position.longitude}");
+    provider.moveToCurrentLocation(position.latitude, position.longitude);
+    provider.mapController.animateCamera(CameraUpdate.newLatLngZoom(
+        LatLng(position.latitude, position.longitude), 19.0));
+    // await _getAddress();
+  }
+
+  void _addCurrentLocationSymbol() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    provider.mapController.addSymbol(
+        SymbolOptions(geometry: LatLng(position.latitude, position.longitude)));
+  }
+  
 }

@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
         width: MediaQueryClass.width,
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/icons/splash_background.png"),
+                image: AssetImage("assets/icons/google_icon.png"),
                 fit: BoxFit.cover)),
         child: ScreenUtilInit(builder: (context, snapshot) {
           return Column(
