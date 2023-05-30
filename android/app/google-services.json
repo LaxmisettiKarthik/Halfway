@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "500565607506",
+    "project_id": "halfwaymappls01",
+    "storage_bucket": "halfwaymappls01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500565607506:android:5eaf386db1765db5e04b8b",
+        "android_client_info": {
+          "package_name": "com.example.halfwaymappls01"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBcnfB4SZ8mP5SudVCpUE9LXs_GaDSUcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
