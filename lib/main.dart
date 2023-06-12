@@ -21,6 +21,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:here_sdk/core.dart';
+import 'package:here_sdk/core.engine.dart';
+import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/maploader.dart';
 import 'package:here_sdk/search.dart';
 import 'package:provider/provider.dart';
@@ -45,6 +47,7 @@ import 'search/search_results_screen.dart';
 
 /// The entry point of the application.
 void main() {
+  _initializeHERESDK();
   WidgetsFlutterBinding.ensureInitialized();
   SdkContext.init();
   runApp(MyApp());
@@ -68,7 +71,8 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => RecentSearchDataModel()),
-        ChangeNotifierProvider(create: (context) => RoutePreferencesModel.withDefaults()),
+        ChangeNotifierProvider(
+            create: (context) => RoutePreferencesModel.withDefaults()),
         ChangeNotifierProvider(create: (context) => MapLoaderController()),
         ChangeNotifierProvider(create: (context) => AppPreferences()),
         Provider(create: (context) => PositioningEngine()),
@@ -85,7 +89,8 @@ class _MyAppState extends State<MyApp> {
           const Locale('en', ''),
         ],
         theme: UIStyle.lightTheme,
-        onGenerateTitle: (BuildContext context) => AppLocalizations.of(context)!.appTitle,
+        onGenerateTitle: (BuildContext context) =>
+            AppLocalizations.of(context)!.appTitle,
         onGenerateRoute: (RouteSettings settings) {
           Map<String, WidgetBuilder> routes = {
             LandingScreen.navRoute: (BuildContext context) => LandingScreen(),
@@ -145,5 +150,23 @@ class _MyAppState extends State<MyApp> {
         initialRoute: LandingScreen.navRoute,
       ),
     );
+  }
+}
+
+void _initializeHERESDK() async {
+  // Needs to be called before accessing SDKOptions to load necessary libraries.
+  SdkContext.init(IsolateOrigin.main);
+
+  // Set your credentials for the HERE SDK.
+  String accessKeyId = "k2Ve0nzw2BcxXXicPw1_qQ";
+  String accessKeySecret =
+      "BHvL4ltVK9wOBDBSeIpgFzSLx-CbZjPsvN-H9px4MaDj2kfCVLwPUOCbzi457hJ4Sa2k5SLmhR1_rVr4Pi6YEw";
+  SDKOptions sdkOptions =
+      SDKOptions.withAccessKeySecret(accessKeyId, accessKeySecret);
+
+  try {
+    await SDKNativeEngine.makeSharedInstance(sdkOptions);
+  } on InstantiationException {
+    throw Exception("Failed to initialize the HERE SDK.");
   }
 }
