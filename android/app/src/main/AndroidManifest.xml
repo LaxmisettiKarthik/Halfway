@@ -1,6 +1,8 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.RefApp">
+
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
@@ -25,13 +27,19 @@
         android:icon="@mipmap/ic_launcher"
         android:label="HERE SDK Ref App"
         tools:ignore="AllowBackup">
+        <!-- Disable the Auto-InitProvider of the HERE SDK until the InitProvider is removed with release 4.15.0. -->
+        <provider
+            android:name="com.here.sdk.engine.InitProvider"
+            android:authorities="com.here.sdk.engine.InitProvider"
+            android:exported="false"
+            tools:node="remove" />
 
-        <meta-data
+        <!-- <meta-data
             android:name="com.here.sdk.access_key_id"
-            android:value="${HERESDK_ACCESS_KEY_ID}" />
+            android:value="aGPwhDV1oSGUXzDz72UW_w" />
         <meta-data
             android:name="com.here.sdk.access_key_secret"
-            android:value="${HERESDK_ACCESS_KEY_SECRET}" />
+            android:value="dSkxQf1QxT-FOvLWATMbVxSy958q2DwW642ahhRzMgMV1ZdNmu2YXJqUA4sqB7cNr9iAjiZK9nrG8AIfvMTTw" /> -->
 
         <activity
             android:name=".MainActivity"

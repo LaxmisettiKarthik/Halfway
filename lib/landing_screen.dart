@@ -124,8 +124,9 @@ class _LandingScreenState extends State<LandingScreen> with Positioning, Widgets
 
   void _onMapCreated(HereMapController hereMapController) {
     _hereMapController = hereMapController;
+//hereMapController.mapScene.enableFeatures({MapFeatures.landmarks: MapFeatureModes.landmarksTextured});
 
-    hereMapController.mapScene.loadSceneForMapScheme(MapScheme.normalDay, (MapError? error) {
+    hereMapController.mapScene.loadSceneForMapScheme(MapScheme.satellite, (MapError? error) {
       if (error != null) {
         print('Map scene not loaded. MapError: ${error.toString()}');
         return;
@@ -276,7 +277,7 @@ class _LandingScreenState extends State<LandingScreen> with Positioning, Widgets
     customMapStyleSettings.reset();
     FileUtility.deleteScenesDirectory();
     _hereMapController.mapScene.loadSceneForMapScheme(
-      MapScheme.normalDay,
+      MapScheme.satellite,
       (MapError? error) {
         if (error != null) {
           print('Map scene not loaded. MapError: ${error.toString()}');

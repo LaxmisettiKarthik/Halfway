@@ -306,7 +306,7 @@ void setTrafficLayersVisibilityOnMap(BuildContext context, HereMapController her
   }
 }
 
-/// Function loads map scene using custom map style defined in [CustomMapStyleSettings]. [MapScheme.normalDay] style is
+/// Function loads map scene using custom map style defined in [CustomMapStyleSettings]. [MapScheme.satellite] style is
 /// used if custom map style is not defined.
 void loadMapScene(
   CustomMapStyleSettings customMapStyleSettings,
@@ -319,7 +319,7 @@ void loadMapScene(
           mapSceneLoadSceneCallback,
         )
       : hereMapController.mapScene.loadSceneForMapScheme(
-          MapScheme.normalDay,
+          MapScheme.satellite,
           mapSceneLoadSceneCallback,
         );
 }

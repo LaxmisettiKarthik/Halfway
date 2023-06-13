@@ -8,7 +8,7 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw  GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
@@ -44,7 +44,11 @@ android {
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        manifestPlaceholders = readCredentials()
+        //manifestPlaceholders = readCredentials()
+        // manifestPlaceholders = [
+        //     HERESDK_ACCESS_KEY_ID: "aGPwhDV1oSGUXzDz72UW_w",
+        //     HERESDK_ACCESS_KEY_SECRET: "dSkxQf1QxT-FOvLWATMbVxSy958q2DwW642ahhRzMgMV1ZdNmu2YXJqUA4sqB7cNr9iAjiZK9nrG8AIfvMTTw"
+        // ]
     }
 
     buildTypes {

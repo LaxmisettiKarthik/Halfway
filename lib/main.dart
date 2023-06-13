@@ -42,12 +42,33 @@ import 'routing/waypoint_info.dart';
 import 'routing/waypoints_controller.dart';
 import 'search/recent_search_data_model.dart';
 import 'search/search_results_screen.dart';
+import 'package:here_sdk/core.engine.dart';
+import 'package:here_sdk/core.errors.dart';
 
 /// The entry point of the application.
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  _initializeHERESDK();
   SdkContext.init();
   runApp(MyApp());
+}
+
+void _initializeHERESDK() async {
+  // Needs to be called before accessing SDKOptions to load necessary libraries.
+  SdkContext.init(IsolateOrigin.main);
+
+  // Set your credentials for the HERE SDK.
+  String accessKeyId = "aGPwhDV1oSGUXzDz72UW_w";
+  String accessKeySecret =
+      "sdSkxQf1QxT-FOvLWATMbVxSy958q2DwW642ahhRzMgMV1ZdNmu2YXJqUA4sqB7cNr9iAjiZK9nrG8AIfvMTTw";
+  SDKOptions sdkOptions =
+      SDKOptions.withAccessKeySecret(accessKeyId, accessKeySecret);
+
+  try {
+    await SDKNativeEngine.makeSharedInstance(sdkOptions);
+  } on InstantiationException {
+    throw Exception("Failed to initialize the HERE SDK.");
+  }
 }
 
 /// Application root widget.
@@ -58,17 +79,22 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void dispose() {
+  void dispose() async{
     SdkContext.release();
+     await SDKNativeEngine.sharedInstance?.dispose();
+  SdkContext.release();
     super.dispose();
   }
+ 
+
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => RecentSearchDataModel()),
-        ChangeNotifierProvider(create: (context) => RoutePreferencesModel.withDefaults()),
+        ChangeNotifierProvider(
+            create: (context) => RoutePreferencesModel.withDefaults()),
         ChangeNotifierProvider(create: (context) => MapLoaderController()),
         ChangeNotifierProvider(create: (context) => AppPreferences()),
         Provider(create: (context) => PositioningEngine()),
@@ -85,7 +111,8 @@ class _MyAppState extends State<MyApp> {
           const Locale('en', ''),
         ],
         theme: UIStyle.lightTheme,
-        onGenerateTitle: (BuildContext context) => AppLocalizations.of(context)!.appTitle,
+        onGenerateTitle: (BuildContext context) =>
+            AppLocalizations.of(context)!.appTitle,
         onGenerateRoute: (RouteSettings settings) {
           Map<String, WidgetBuilder> routes = {
             LandingScreen.navRoute: (BuildContext context) => LandingScreen(),
