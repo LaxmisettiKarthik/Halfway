@@ -17,6 +17,7 @@
  * License-Filename: LICENSE
  */
 
+import 'package:RefApp/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -101,6 +102,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => CustomMapStyleSettings()),
       ],
       child: MaterialApp(
+        home: Navbar(),
         localizationsDelegates: [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
@@ -143,6 +145,7 @@ class _MyAppState extends State<MyApp> {
                 wayPointsController: arguments[1] as WayPointsController,
               );
             },
+            
             NavigationScreen.navRoute: (BuildContext context) {
               List<dynamic> arguments = settings.arguments as List<dynamic>;
               assert(arguments.length == 2);
@@ -164,7 +167,8 @@ class _MyAppState extends State<MyApp> {
           };
 
           WidgetBuilder builder = routes[settings.name]!;
-          return MaterialPageRoute(
+          return 
+          MaterialPageRoute(
             builder: (ctx) => builder(ctx),
             settings: settings,
           );
