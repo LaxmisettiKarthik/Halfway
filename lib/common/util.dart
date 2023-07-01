@@ -319,7 +319,7 @@ void loadMapScene(
           mapSceneLoadSceneCallback,
         )
       : hereMapController.mapScene.loadSceneForMapScheme(
-          MapScheme.satellite,
+          MapScheme.normalDay,
           mapSceneLoadSceneCallback,
         );
 }

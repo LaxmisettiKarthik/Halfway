@@ -1,108 +1,177 @@
-import 'package:RefApp/publicTransit/publictransit.dart';
-import 'package:RefApp/traffic/traffic.dart';
+import 'package:RefApp/components/camera/camera.dart';
+import 'package:RefApp/components/carto_poi_picking/cartopick.dart';
+import 'package:RefApp/components/ev_routing/evrouting.dart';
+import 'package:RefApp/components/offlinemaps/offlinemaps.dart';
+import 'package:RefApp/components/publicTransit/transit.dart';
+import 'package:RefApp/components/rasterlayers/rasterlayer.dart';
+import 'package:RefApp/components/spacialaudio/spacialaudio.dart';
+import 'package:RefApp/components/traffic.dart/traffic.dart';
 import 'package:flutter/material.dart';
-import 'camera/camera.dart';
-import 'custom raster layers/customraster.dart';
 
-
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<Widget> items = <Widget>[
+    const Column(
+      children: [
+        Icon(
+          Icons.offline_bolt,
+          size: 85,
+        ),
+        Text(
+          'Offline Maps',
+          style: TextStyle(
+            fontSize: 15.0,
+            color: Colors.black,
+          ),
+        )
+      ],
+    ),
+    const Column(
+      children: [
+        Icon(
+          Icons.spatial_audio,
+          size: 85,
+        ),
+        Text(
+          'Spacial Audio Navigation',
+          style: TextStyle(
+            fontSize: 15.0,
+            color: Colors.black,
+          ),
+        )
+      ],
+    ),
+    const Column(
+      children: [
+        Icon(
+          Icons.traffic,
+          size: 85,
+        ),
+        Text(
+          'Traffic',
+          style: TextStyle(
+            fontSize: 15.0,
+            color: Colors.black,
+          ),
+        )
+      ],
+    ),
+    const Column(
+      children: [
+        Icon(
+          Icons.place,
+          size: 85,
+        ),
+        Text(
+          'Carto poi picking',
+          style: TextStyle(
+            fontSize: 15.0,
+            color: Colors.black,
+          ),
+        )
+      ],
+    ),
+    const Column(
+      children: [
+        Icon(
+          Icons.ev_station,
+          size: 85,
+        ),
+        Text(
+          'EV Routing',
+          style: TextStyle(
+            fontSize: 15.0,
+            color: Colors.black,
+          ),
+        )
+      ],
+    ),
+    const Column(
+      children: [
+        Icon(
+          Icons.transit_enterexit,
+          size: 85,
+        ),
+        Text(
+          'Public Transit',
+          style: TextStyle(
+            fontSize: 15.0,
+            color: Colors.black,
+          ),
+        )
+      ],
+    ),
+    const Column(
+      children: [
+        Icon(
+          Icons.layers,
+          size: 85,
+        ),
+        Text(
+          'Custom layers',
+          style: TextStyle(
+            fontSize: 15.0,
+            color: Colors.black,
+          ),
+        )
+      ],
+    ),
+    const Column(
+      children: [
+        Icon(
+          Icons.camera,
+          size: 85,
+        ),
+        Text(
+          'Camera Move',
+          style: TextStyle(
+            fontSize: 15.0,
+            color: Colors.black,
+          ),
+        )
+      ],
+    ),
+  ];
+
+final List<MaterialPageRoute> routes = [
+    MaterialPageRoute(builder: (context) => const OfflineMaps()),
+    MaterialPageRoute(builder: (context) => const SpacialAudio()),
+    MaterialPageRoute(builder: (context) => const Traffic()),
+    MaterialPageRoute(builder: (context) => const CarToPick()),
+    MaterialPageRoute(builder: (context) => const EvRouting()),
+    MaterialPageRoute(builder: (context) => const Transit()),
+    MaterialPageRoute(builder: (context) => const RasterLayers()),
+    MaterialPageRoute(builder: (context) => const Camera()),
+
+  ];
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('HalfWay..')),
-      body: Center(
-        child: ListView(
-          children: [
-            // ListTile(
-            //     title: Text(' Go to map'),
-            //     onTap: () {
-            //       Navigator.of(context).push(
-            //         MaterialPageRoute(
-            //           builder: (context) => Map(),
-            //         ),
-            //       );
-            //     }),
-            // ListTile(
-            //     title: Text('Search'),
-            //     onTap: () {
-            //       Navigator.of(context).push(
-            //         MaterialPageRoute(
-            //           builder: (context) => Search(),
-            //         ),
-            //       );
-            //     }),
-            // ListTile(
-            //     //getting crashed
-            //     title: Text('Routing'),
-            //     onTap: () {
-            //       Navigator.of(context).push(
-            //         MaterialPageRoute(
-            //           builder: (context) => Routing(),
-            //         ),
-            //       );
-            //     }),
-            ListTile(
-                title: Text('Camera'),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => Camera(),
-                    ),
-                  );
-                }),
-            ListTile(
-                title: Text('Traffic'),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => Traffic(),
-                    ),
-                  );
-                }),
-            ListTile(
-                //getting crashed
-                title: Text('Public Transit'),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => PublicTransit(),
-                    ),
-                  );
-                }),
-            ListTile(
-                title: Text('Custom Raster Layers'),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => CustomRasterLayers(),
-                    ),
-                  );
-                }),
-            // ListTile(
-            //     //getting crashed
-            //     title: Text('Navigation'),
-            //     onTap: () {
-            //       Navigator.of(context).push(
-            //         MaterialPageRoute(
-            //           builder: (context) => Navigation(),
-            //         ),
-            //       );
-            //     }),
-            // ListTile(
-            //   //getting crashed
-            //   title: Text('Navigation 2.0'),
-            //   onTap: () {
-            //     Navigator.of(context).push(
-            //       MaterialPageRoute(
-            //         builder: (context) => Navigate(),
-            //       ),
-            //     );
-            //   },
-            // ),
-          ],
-        ),
+      body: GridView.count(
+        crossAxisCount: 2, // Number of columns in the grid
+        crossAxisSpacing: 16.0, // Spacing between columns
+        mainAxisSpacing: 16.0, // Spacing between rows
+        padding: EdgeInsets.all(16.0),
+        children: List.generate(items.length, (index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(context, routes[index]);
+            },
+            child: Container(
+              child: Center(
+                child: items[index],
+              ),
+            ),
+          );
+        }),
       ),
     );
   }

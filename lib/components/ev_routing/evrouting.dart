@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:here_sdk/core.dart';
 import 'package:here_sdk/core.engine.dart';
 import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
 
-import 'PublicTransportRoutingExample.dart';
+import 'EVRoutingExample.dart';
 
-class PublicTransit extends StatefulWidget {
-  const PublicTransit({super.key});
+class EvRouting extends StatefulWidget {
+  const EvRouting({super.key});
 
   @override
-  State<PublicTransit> createState() => _PublicTransitState();
+  State<EvRouting> createState() => _EvRoutingState();
 }
 
-class _PublicTransitState extends State<PublicTransit> {
-    PublicTransportRoutingExample? _routingExample;
+class _EvRoutingState extends State<EvRouting> {
+   EVRoutingExample? _evRoutingExample;
 
   @override
-  Widget build(BuildContext context) {
-return Scaffold(
+   Widget build(BuildContext context) {
+    return Scaffold(
       appBar: AppBar(
-        title: Text('HERE SDK - Routing Example'),
+        title: Text('HERE SDK - EVRouting Example'),
       ),
       body: Stack(
         children: [
@@ -28,8 +29,9 @@ return Scaffold(
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              button('Add Transit Route', _addTransitRouteButtonClicked),
-              button('Clear Map', _clearMapButtonClicked),
+              button('EV Route', _addEVRouteButtonClicked),
+              button('Isoline', _reachableAreaButtonClicked),
+              button('Clear', _clearMapButtonClicked),
             ],
           ),
         ],
@@ -38,30 +40,28 @@ return Scaffold(
   }
 
   void _onMapCreated(HereMapController hereMapController) {
-    hereMapController.mapScene.loadSceneForMapScheme(MapScheme.satellite, (MapError? error) {
+    hereMapController.mapScene.loadSceneForMapScheme(MapScheme.normalDay, (MapError? error) {
       if (error == null) {
-        _routingExample = PublicTransportRoutingExample(_showDialog, hereMapController);
+        _evRoutingExample = EVRoutingExample(_showDialog, hereMapController);
       } else {
         print("Map scene not loaded. MapError: " + error.toString());
       }
     });
   }
 
-  void _addTransitRouteButtonClicked() {
-    _routingExample?.addTransitRoute();
+  void _addEVRouteButtonClicked() {
+    _evRoutingExample?.addEVRoute();
+  }
+
+  void _reachableAreaButtonClicked() {
+    _evRoutingExample?.showReachableArea();
   }
 
   void _clearMapButtonClicked() {
-    _routingExample?.clearMap();
+    _evRoutingExample?.clearMap();
   }
 
-  @override
-  void dispose() {
-    // Free HERE SDK resources before the application shuts down.
-    SDKNativeEngine.sharedInstance?.dispose();
-    SdkContext.release();
-    super.dispose();
-  }
+ 
 
   // A helper method to add a button on top of the HERE map.
   Align button(String buttonLabel, Function callbackFunction) {
@@ -103,5 +103,6 @@ return Scaffold(
           ],
         );
       },
-    );  }
+    );
+  }
 }

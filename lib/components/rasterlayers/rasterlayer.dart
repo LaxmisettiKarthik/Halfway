@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:here_sdk/core.dart';
 import 'package:here_sdk/core.engine.dart';
-import 'package:here_sdk/mapview.dart';
 import 'package:here_sdk/core.errors.dart';
-import 'CameraExample.dart';
-class Camera extends StatefulWidget {
-  const Camera({super.key});
+import 'package:here_sdk/mapview.dart';
+
+import 'CustomRasterLayersExample.dart';
+class RasterLayers extends StatefulWidget {
+  const RasterLayers({super.key});
 
   @override
-  State<Camera> createState() => _CameraState();
+  State<RasterLayers> createState() => _RasterLayersState();
 }
 
-class _CameraState extends State<Camera> {
-    CameraExample? _cameraExample;
+class _RasterLayersState extends State<RasterLayers> {
+   CustomRasterLayersExample? _customRasterLayersExample;
 
   @override
   Widget build(BuildContext context) {
-   return MaterialApp(
+    return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('HERE SDK - Camera Example'),
+          title: Text('Custom Raster Layers'),
         ),
         body: Stack(
           children: [
@@ -27,7 +29,8 @@ class _CameraState extends State<Camera> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                button('Move', _moveButtonClicked),
+                button('Enable', _enableButtonClicked),
+                button('Disable', _disableButtonClicked),
               ],
             ),
           ],
@@ -37,30 +40,24 @@ class _CameraState extends State<Camera> {
   }
 
   void _onMapCreated(HereMapController hereMapController) {
-    hereMapController.mapScene.loadSceneForMapScheme(MapScheme.satellite, (MapError? error) {
+    hereMapController.mapScene.loadSceneForMapScheme(MapScheme.normalDay, (MapError? error) {
       if (error == null) {
-        _cameraExample = CameraExample(hereMapController);
+        _customRasterLayersExample = CustomRasterLayersExample(hereMapController);
       } else {
         print("Map scene not loaded. MapError: " + error.toString());
       }
     });
   }
 
-  void _moveButtonClicked() {
-    _cameraExample?.move();
+  void _enableButtonClicked() {
+    _customRasterLayersExample?.enableButtonClicked();
   }
 
-  @override
-  void dispose() {
-    _disposeHERESDK();
-    super.dispose();
+  void _disableButtonClicked() {
+    _customRasterLayersExample?.disableButtonClicked();
   }
 
-  void _disposeHERESDK() async {
-    // Free HERE SDK resources before the application shuts down.
-    await SDKNativeEngine.sharedInstance?.dispose();
-    SdkContext.release();
-  }
+  
 
   // A helper method to add a button on top of the HERE map.
   Align button(String buttonLabel, Function callbackFunction) {

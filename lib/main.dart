@@ -17,6 +17,7 @@
  * License-Filename: LICENSE
  */
 
+import 'package:RefApp/Login.dart';
 import 'package:RefApp/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -45,12 +46,18 @@ import 'search/recent_search_data_model.dart';
 import 'search/search_results_screen.dart';
 import 'package:here_sdk/core.engine.dart';
 import 'package:here_sdk/core.errors.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 
 /// The entry point of the application.
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   _initializeHERESDK();
   SdkContext.init();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -59,9 +66,9 @@ void _initializeHERESDK() async {
   SdkContext.init(IsolateOrigin.main);
 
   // Set your credentials for the HERE SDK.
-  String accessKeyId = "aGPwhDV1oSGUXzDz72UW_w";
+  String accessKeyId = "vCEflHpSMJUnE89kLwahvA";
   String accessKeySecret =
-      "sdSkxQf1QxT-FOvLWATMbVxSy958q2DwW642ahhRzMgMV1ZdNmu2YXJqUA4sqB7cNr9iAjiZK9nrG8AIfvMTTw";
+      "g6Cm2B47pu-nm1HMWyQwaXxJiCUKl4XsCQuCPUZLVjgm4TIBeJf7T-xbMNITvr1N6OK5F7Q--tbK9rtIMCgqMw";
   SDKOptions sdkOptions =
       SDKOptions.withAccessKeySecret(accessKeyId, accessKeySecret);
 
@@ -102,7 +109,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => CustomMapStyleSettings()),
       ],
       child: MaterialApp(
-        home: Navbar(),
+        home: LoginPage(),
         localizationsDelegates: [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
@@ -178,3 +185,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+

@@ -1,67 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:here_sdk/core.dart';
 import 'package:here_sdk/core.engine.dart';
+import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
 
-import 'TrafficExample.dart';
-class Traffic extends StatefulWidget {
-  const Traffic({super.key});
+import 'PublicTransportRoutingExample.dart';
+class Transit extends StatefulWidget {
+  const Transit({super.key});
 
   @override
-  State<Traffic> createState() => _TrafficState();
+  State<Transit> createState() => _TransitState();
 }
 
-class _TrafficState extends State<Traffic> {
-    TrafficExample? _trafficExample;
+class _TransitState extends State<Transit> {
+    PublicTransportRoutingExample? _routingExample;
 
   @override
-  Widget build(BuildContext context) {
-     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('HERE SDK - Traffic Example'),
-        ),
-        body: Stack(
-          children: [
-            HereMap(onMapCreated: _onMapCreated),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                button('Enable All', _enableAllButtonClicked),
-                button('Disable All', _disableAllButtonClicked),
-              ],
-            ),
-          ],
-        ),
+   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('HERE SDK - Routing Example'),
+      ),
+      body: Stack(
+        children: [
+          HereMap(onMapCreated: _onMapCreated),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              button('Add Transit Route', _addTransitRouteButtonClicked),
+              button('Clear Map', _clearMapButtonClicked),
+            ],
+          ),
+        ],
       ),
     );
   }
 
   void _onMapCreated(HereMapController hereMapController) {
-    hereMapController.mapScene.loadSceneForMapScheme(MapScheme.satellite, (MapError? error) {
+    hereMapController.mapScene.loadSceneForMapScheme(MapScheme.normalDay, (MapError? error) {
       if (error == null) {
-        _trafficExample = TrafficExample(_showDialog, hereMapController);
+        _routingExample = PublicTransportRoutingExample(_showDialog, hereMapController);
       } else {
         print("Map scene not loaded. MapError: " + error.toString());
       }
     });
   }
 
-  void _enableAllButtonClicked() {
-    _trafficExample?.enableAll();
+  void _addTransitRouteButtonClicked() {
+    _routingExample?.addTransitRoute();
   }
 
-  void _disableAllButtonClicked() {
-    _trafficExample?.disableAll();
+  void _clearMapButtonClicked() {
+    _routingExample?.clearMap();
   }
 
-  @override
-  void dispose() {
-    // Free HERE SDK resources before the application shuts down.
-    SDKNativeEngine.sharedInstance?.dispose();
-    SdkContext.release();
-    super.dispose();
-  }
 
   // A helper method to add a button on top of the HERE map.
   Align button(String buttonLabel, Function callbackFunction) {

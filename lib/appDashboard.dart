@@ -131,9 +131,12 @@ class _AppDashboardState extends State<AppDashboard> {
                                         ),
                                       );
                                     },
-                                    child: Image.asset(
+                                    child: Image.network(                                                                            
                                       //data['ImageURL']
-                                     'assets/green_dot.png'
+                                      fit: BoxFit.cover,
+                                      width:50,
+                                      height:50,
+                                     "https://s3images.zee5.com/wp-content/uploads/2023/01/ANI-20230105050412.jpg"
                                       ),
                                   ),
                                 )
