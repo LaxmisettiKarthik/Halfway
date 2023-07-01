@@ -152,18 +152,18 @@ final List<MaterialPageRoute> routes = [
   ];
 
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GridView.count(
-        crossAxisCount: 2, // Number of columns in the grid
-        crossAxisSpacing: 16.0, // Spacing between columns
-        mainAxisSpacing: 16.0, // Spacing between rows
+        crossAxisCount: 2,
+        crossAxisSpacing: 16.0,
+        mainAxisSpacing: 16.0,
         padding: EdgeInsets.all(16.0),
         children: List.generate(items.length, (index) {
           return GestureDetector(
             onTap: () {
-              Navigator.push(context, routes[index]);
+              Navigator.pushReplacement(context, routes[index]);
             },
             child: Container(
               child: Center(

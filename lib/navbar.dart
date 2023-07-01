@@ -3,7 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'mapDash.dart';
-import 'appDashboard.dart';
+import 'landing_screen.dart';
 //import 'landing_screen.dart';
 
 class Navbar extends StatefulWidget {
@@ -16,7 +16,7 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int _page = 0;
   final List<Widget> _children = [
-    AppDashboard(),
+    LandingScreen(),
     DragBar(),
     HomePage(),
   ];

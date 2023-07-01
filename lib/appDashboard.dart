@@ -133,7 +133,7 @@ class _AppDashboardState extends State<AppDashboard> {
                                     },
                                     child: Image.network(                                                                            
                                       //data['ImageURL']
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.fill,
                                       width:50,
                                       height:50,
                                      "https://s3images.zee5.com/wp-content/uploads/2023/01/ANI-20230105050412.jpg"
