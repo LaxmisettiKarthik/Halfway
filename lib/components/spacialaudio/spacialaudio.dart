@@ -6,6 +6,8 @@ import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
 import 'package:here_sdk/navigation.dart' as HERE;
 import 'package:here_sdk/routing.dart' as HERE;
+
+import '../../home.dart';
 class SpacialAudio extends StatefulWidget {
   const SpacialAudio({super.key});
 
@@ -44,6 +46,13 @@ class _SpacialAudioState extends State<SpacialAudio> {
         child: Scaffold(
           appBar: AppBar(
             title: Text('Spatial Navigation Example'),
+             leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            },
+          ),
           ),
           body: Stack(
             children: [

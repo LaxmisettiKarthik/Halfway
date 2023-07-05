@@ -4,8 +4,9 @@ import 'package:here_sdk/core.dart';
 import 'package:here_sdk/core.engine.dart';
 import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
-
 import 'CameraExample.dart';
+import '../../home.dart';
+
 class Camera extends StatefulWidget {
   const Camera({super.key});
 
@@ -14,13 +15,20 @@ class Camera extends StatefulWidget {
 }
 
 class _CameraState extends State<Camera> {
-    CameraExample? _cameraExample;
+  CameraExample? _cameraExample;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            },
+          ),
           title: Text('HERE SDK - Camera Example'),
         ),
         body: Stack(
@@ -39,7 +47,8 @@ class _CameraState extends State<Camera> {
   }
 
   void _onMapCreated(HereMapController hereMapController) {
-    hereMapController.mapScene.loadSceneForMapScheme(MapScheme.normalDay, (MapError? error) {
+    hereMapController.mapScene.loadSceneForMapScheme(MapScheme.normalDay,
+        (MapError? error) {
       if (error == null) {
         _cameraExample = CameraExample(hereMapController);
       } else {
@@ -51,8 +60,6 @@ class _CameraState extends State<Camera> {
   void _moveButtonClicked() {
     _cameraExample?.move();
   }
-
- 
 
   void _disposeHERESDK() async {
     // Free HERE SDK resources before the application shuts down.

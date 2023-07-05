@@ -4,6 +4,7 @@ import 'package:here_sdk/core.engine.dart';
 import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
 
+import '../../home.dart';
 import 'PublicTransportRoutingExample.dart';
 class Transit extends StatefulWidget {
   const Transit({super.key});
@@ -20,6 +21,13 @@ class _TransitState extends State<Transit> {
     return Scaffold(
       appBar: AppBar(
         title: Text('HERE SDK - Routing Example'),
+         leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+             Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            },
+          ),
       ),
       body: Stack(
         children: [

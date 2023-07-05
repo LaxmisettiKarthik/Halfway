@@ -4,7 +4,9 @@ import 'package:here_sdk/core.engine.dart';
 import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
 
+import '../../home.dart';
 import 'TrafficExample.dart';
+
 class Traffic extends StatefulWidget {
   const Traffic({super.key});
 
@@ -13,7 +15,7 @@ class Traffic extends StatefulWidget {
 }
 
 class _TrafficState extends State<Traffic> {
-    TrafficExample? _trafficExample;
+  TrafficExample? _trafficExample;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,13 @@ class _TrafficState extends State<Traffic> {
       home: Scaffold(
         appBar: AppBar(
           title: Text('HERE SDK - Traffic Example'),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            },
+          ),
         ),
         body: Stack(
           children: [
@@ -39,7 +48,8 @@ class _TrafficState extends State<Traffic> {
   }
 
   void _onMapCreated(HereMapController hereMapController) {
-    hereMapController.mapScene.loadSceneForMapScheme(MapScheme.normalDay, (MapError? error) {
+    hereMapController.mapScene.loadSceneForMapScheme(MapScheme.normalDay,
+        (MapError? error) {
       if (error == null) {
         _trafficExample = TrafficExample(_showDialog, hereMapController);
       } else {
@@ -55,8 +65,6 @@ class _TrafficState extends State<Traffic> {
   void _disableAllButtonClicked() {
     _trafficExample?.disableAll();
   }
-
-  
 
   // A helper method to add a button on top of the HERE map.
   Align button(String buttonLabel, Function callbackFunction) {

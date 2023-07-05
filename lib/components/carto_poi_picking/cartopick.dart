@@ -8,6 +8,8 @@ import 'package:here_sdk/gestures.dart';
 import 'package:here_sdk/mapview.dart';
 import 'package:here_sdk/search.dart';
 
+import '../../home.dart';
+
 class CarToPick extends StatefulWidget {
   const CarToPick({super.key});
 
@@ -23,6 +25,13 @@ class _CarToPickState extends State<CarToPick> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Carto POI Picking'),
+         leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            },
+          ),
       ),
       body: Stack(
         children: [

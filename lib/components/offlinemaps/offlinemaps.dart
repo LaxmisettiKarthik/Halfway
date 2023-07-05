@@ -4,6 +4,7 @@ import 'package:here_sdk/core.engine.dart';
 import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
 
+import '../../home.dart';
 import 'OfflineMapsExample.dart';
 class OfflineMaps extends StatefulWidget {
   const OfflineMaps({super.key});
@@ -20,6 +21,13 @@ class _OfflineMapsState extends State<OfflineMaps> {
     return Scaffold(
       appBar: AppBar(
         title: Text('HERE SDK - Offline Maps Example'),
+         leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+             Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            },
+          ),
       ),
       body: Stack(
         children: [

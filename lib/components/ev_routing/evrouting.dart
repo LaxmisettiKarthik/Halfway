@@ -5,6 +5,7 @@ import 'package:here_sdk/core.engine.dart';
 import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
 
+import '../../home.dart';
 import 'EVRoutingExample.dart';
 
 class EvRouting extends StatefulWidget {
@@ -22,6 +23,13 @@ class _EvRoutingState extends State<EvRouting> {
     return Scaffold(
       appBar: AppBar(
         title: Text('HERE SDK - EVRouting Example'),
+         leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+            Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            },
+          ),
       ),
       body: Stack(
         children: [
