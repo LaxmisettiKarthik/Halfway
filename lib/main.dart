@@ -124,9 +124,11 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: (message == "")
-                    ? LoginPage() :
-                    Navbar(),
+        home: 
+      //  (message == "")
+                    ?
+                     LoginPage() :
+                    //Navbar(),
         localizationsDelegates: [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,

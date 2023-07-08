@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:here_sdk/mapview.dart';
 
-import '../../home.dart';
 import 'EVRoutingExample.dart';
 
 class EvRouting extends StatefulWidget {
@@ -18,12 +17,11 @@ class _EvRoutingState extends State<EvRouting> {
    Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HERE SDK - EVRouting Example'),
+        title: Text('EV Routing'),
          leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-            Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const HomePage()));
+            Navigator.pop(context);
             },
           ),
       ),

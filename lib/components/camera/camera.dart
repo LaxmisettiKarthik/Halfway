@@ -3,7 +3,7 @@ import 'package:here_sdk/core.dart';
 import 'package:here_sdk/core.engine.dart';
 import 'package:here_sdk/mapview.dart';
 import 'CameraExample.dart';
-import '../../home.dart';
+
 
 class Camera extends StatefulWidget {
   const Camera({super.key});
@@ -17,29 +17,27 @@ class _CameraState extends State<Camera> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const HomePage()));
-            },
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text('Camera'),
+      ),
+      body: Stack(
+        children: [
+          HereMap(onMapCreated: _onMapCreated),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              button('Move', _moveButtonClicked),
+            ],
           ),
-          title: Text('HERE SDK - Camera Example'),
-        ),
-        body: Stack(
-          children: [
-            HereMap(onMapCreated: _onMapCreated),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                button('Move', _moveButtonClicked),
-              ],
-            ),
-          ],
-        ),
-      
+        ],
+      ),
     );
   }
 

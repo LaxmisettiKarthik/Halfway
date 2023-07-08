@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:here_sdk/core.dart';
-import 'package:here_sdk/core.engine.dart';
-import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
 
-import '../../home.dart';
 import 'TrafficExample.dart';
 
 class Traffic extends StatefulWidget {
@@ -21,12 +17,11 @@ class _TrafficState extends State<Traffic> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('HERE SDK - Traffic Example'),
+          title: Text('Traffic'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const HomePage()));
+              Navigator.pop(context);
             },
           ),
         ),

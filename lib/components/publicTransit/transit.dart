@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:here_sdk/mapview.dart';
 
-import '../../home.dart';
 import 'PublicTransportRoutingExample.dart';
 class Transit extends StatefulWidget {
   const Transit({super.key});
@@ -17,12 +16,11 @@ class _TransitState extends State<Transit> {
    Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HERE SDK - Routing Example'),
+        title: Text('Public Transit'),
          leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-             Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const HomePage()));
+            Navigator.pop(context);
             },
           ),
       ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:here_sdk/mapview.dart';
 
-import '../../home.dart';
 import 'CustomRasterLayersExample.dart';
 class RasterLayers extends StatefulWidget {
   const RasterLayers({super.key});
@@ -18,12 +17,11 @@ class _RasterLayersState extends State<RasterLayers> {
   Widget build(BuildContext context) {
     return  Scaffold(
         appBar: AppBar(
-          title: Text('Custom Raster Layers'),
+          title: Text('Custom Map Layers'),
            leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-           Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const HomePage()));
+           Navigator.pop(context);
             },
           ),
         ),

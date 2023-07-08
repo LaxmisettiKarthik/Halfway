@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:here_sdk/core.dart' as HERE;
-import 'package:here_sdk/core.engine.dart';
 import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
 import 'package:here_sdk/navigation.dart' as HERE;
 import 'package:here_sdk/routing.dart' as HERE;
 
-import '../../home.dart';
 class SpacialAudio extends StatefulWidget {
   const SpacialAudio({super.key});
 
@@ -45,12 +43,11 @@ class _SpacialAudioState extends State<SpacialAudio> {
         onWillPop: _handleBackPress,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Spatial Navigation Example'),
+            title: Text('Spatial Audio Navigation'),
              leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const HomePage()));
+              Navigator.pop(context);
             },
           ),
           ),

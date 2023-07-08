@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:here_sdk/mapview.dart';
 
-import '../../home.dart';
 import 'OfflineMapsExample.dart';
 class OfflineMaps extends StatefulWidget {
   const OfflineMaps({super.key});
@@ -18,12 +17,11 @@ class _OfflineMapsState extends State<OfflineMaps> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HERE SDK - Offline Maps Example'),
+        title: Text('Offline Maps'),
          leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-             Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const HomePage()));
+             Navigator.pop(context);
             },
           ),
       ),

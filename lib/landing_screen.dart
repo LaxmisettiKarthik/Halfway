@@ -358,11 +358,11 @@ class _LandingScreenState extends State<LandingScreen>
                 ),
                 child: Row(
                   children: [
-                    SvgPicture.asset(
-                      "assets/app_logo.svg",
-                      width: UIStyle.drawerLogoSize,
-                      height: UIStyle.drawerLogoSize,
-                    ),
+                    // SvgPicture.asset(
+                    //   "assets/app_logo.svg",
+                    //   width: UIStyle.drawerLogoSize,
+                    //   height: UIStyle.drawerLogoSize,
+                    // ),
                     SizedBox(
                       width: UIStyle.contentMarginMedium,
                     ),

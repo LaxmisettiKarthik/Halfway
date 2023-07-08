@@ -3,13 +3,108 @@ import 'package:flutter/material.dart';
 import 'package:appbar_animated/appbar_animated.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:io';
+
+import 'package:path/path.dart' as Path;
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'Login.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+final db = FirebaseFirestore.instance;
+final storage = FirebaseStorage.instance;
+
+final TextEditingController _emailController = TextEditingController();
+final TextEditingController _passwordController = TextEditingController();
+final TextEditingController _cpasswordController = TextEditingController();
+
+Future<bool> _register() async {
+  if (_cpasswordController.text != _passwordController.text) {
+    return false; // Passwords don't match
+  }
+
+  try {
+    final UserCredential userCredential =
+        await _auth.createUserWithEmailAndPassword(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    final User? user = userCredential.user;
+    if (user != null) {
+      await user.sendEmailVerification();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('tempUID', user.uid);
+
+      return true; // Registration success
+    } else {
+      return false;
+    }
+  } catch (e) {
+    print(e.toString());
+  }
+
+  return false; // Registration failed or email is already verified
+}
+
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  File? _image;
+  final picker = ImagePicker();
+  String? data;
+  Future chooseImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = File(pickedFile!.path);
+    });
+  }
+
+  Future uploadImage() async {
+    Reference storageReference =
+        storage.ref().child('images/${Path.basename(_image!.path)}');
+    UploadTask uploadTask = storageReference.putFile(_image!);
+    await uploadTask;
+    print('File Uploaded');
+    await storageReference.getDownloadURL().then((fileURL) {
+      data = fileURL;
+    });
+    addFormDataToFirestore(data);
+  }
+
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _numberController = TextEditingController();
+  late final bool _success;
+
+  void addFormDataToFirestore(dataurl) async {
+    print(dataurl);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String? action = prefs.getString('tempUID');
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(action).set({
+        'FirstName': _firstNameController.text,
+        'LastName': _lastNameController.text,
+        'PhoneNumber': _numberController.text,
+        'ImageURL': dataurl,
+      });
+      print('Form data added successfully');
+    } catch (e) {
+      print('Error occurred while adding form data: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,118 +157,140 @@ class RegisterPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Container(
-                      padding:
-                          const EdgeInsets.only(top: 35, left: 30, right: 30),
-                      child: Column(
-                        children: <Widget>[
-                          TextField(
-                            controller: _emailController,
-                            decoration: const InputDecoration(
-                              labelText: "Email",
-                              labelStyle: TextStyle(
-                                fontFamily: 'Monsterrat',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey,
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green),
+                    SingleChildScrollView(
+                      child: Container(
+                        padding:
+                            const EdgeInsets.only(top: 35, left: 30, right: 30),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              height: 20,
+                            ),
+                            _image == null
+                                ? const Text('No image selected.')
+                                : Image.file(
+                                    _image!,
+                                    height: 200,
+                                  ),
+                            const SizedBox(height: 20),
+                            ElevatedButton(
+                              onPressed: chooseImage,
+                              child: const Text('Choose Image'),
+                            ),
+                            const SizedBox(height: 20),
+                            TextFormField(
+                              controller: _firstNameController,
+                              decoration: const InputDecoration(
+                                icon: Icon(Icons.person),
+                                hintText: 'James',
+                                labelText: 'First Name',
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextField(
-                            controller: _passwordController,
-                            decoration: const InputDecoration(
-                              labelText: "Password",
-                              labelStyle: TextStyle(
-                                fontFamily: 'Monsterrat',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey,
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green),
+                            TextFormField(
+                              controller: _lastNameController,
+                              decoration: const InputDecoration(
+                                icon: Icon(Icons.person),
+                                hintText: 'Smith',
+                                labelText: 'Last Name',
                               ),
                             ),
-                            obscureText: true,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextField(
-                            controller: _cpasswordController,
-                            decoration: const InputDecoration(
-                              labelText: "Confirm Password",
-                              labelStyle: TextStyle(
-                                fontFamily: 'Monsterrat',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey,
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green),
+                            const SizedBox(height: 20),
+                            TextFormField(
+                              controller: _emailController,
+                              decoration: const InputDecoration(
+                                icon: Icon(Icons.person),
+                                hintText: 'abc@xyz.com',
+                                labelText: 'Email',
                               ),
                             ),
-                            obscureText: true,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          ElevatedButton(
-                            onPressed: () async {
-                              final reg = await _register();
-                              if (reg) {
-                                Fluttertoast.showToast(
-                                  msg: "Verification Email is sent!!",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 5,
-                                  backgroundColor: Colors.black,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                                );
-                              } else {
-                                Fluttertoast.showToast(
-                                  msg: "Try again!!!",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 5,
-                                  backgroundColor: Colors.black,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                                );
-                              }
-                            },
-                            child: const Text('Sign Up'),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) => const LoginPage(),
-                                    ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              controller: _numberController,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                icon: Icon(Icons.phone),
+                                hintText: 'Enter a phone number',
+                                labelText: 'Phone',
+                              ),
+                            ),
+                            TextField(
+                              controller: _passwordController,
+                              decoration: const InputDecoration(
+                                labelText: "Password",
+                              ),
+                              obscureText: true,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextField(
+                              controller: _cpasswordController,
+                              decoration: const InputDecoration(
+                                labelText: "Confirm Password",
+                              ),
+                              obscureText: true,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            ElevatedButton(
+                              onPressed: () async {
+                                final reg = await _register();
+                                uploadImage();
+                                if (reg) {
+                                  Fluttertoast.showToast(
+                                    msg: "Verification Email is sent!!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 5,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
                                   );
-                                },
-                                child: const Text(
-                                  'Back to Login',
-                                  style: TextStyle(
-                                    color: Colors.blueGrey,
-                                    fontFamily: 'Monsterrat',
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline,
+                                } else {
+                                  Fluttertoast.showToast(
+                                    msg: "Try again!!!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 5,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  );
+                                }
+                              },
+                              child: const Text('Sign Up'),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) => const LoginPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'Back to Login',
+                                    style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontFamily: 'Monsterrat',
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -217,34 +334,4 @@ Widget _appBar(BuildContext context, ColorAnimated colorAnimated) {
       ),
     ],
   );
-}
-
-final TextEditingController _emailController = TextEditingController();
-final TextEditingController _passwordController = TextEditingController();
-final TextEditingController _cpasswordController = TextEditingController();
-
-Future<bool> _register() async {
-  if (_cpasswordController.text != _passwordController.text) {
-    return false; // Passwords don't match
-  }
-
-  try {
-    final UserCredential userCredential =
-        await _auth.createUserWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passwordController.text,
-    );
-
-    final User? user = userCredential.user;
-    if (user != null) {
-      await user.sendEmailVerification();
-      return true; // Registration success
-    } else {
-      return false;
-    }
-  } catch (e) {
-    print(e.toString());
-  }
-
-  return false; // Registration failed or email is already verified
 }

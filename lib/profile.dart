@@ -122,6 +122,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 labelText: 'Last Name',
               ),
             ),
+           
             TextFormField(
               controller: _numberController,
               keyboardType: TextInputType.number,
