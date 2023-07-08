@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:here_sdk/core.dart';
-import 'package:here_sdk/core.engine.dart';
-import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
 
 import '../../home.dart';

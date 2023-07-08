@@ -155,6 +155,7 @@ final List<MaterialPageRoute> routes = [
  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: GridView.count(
         crossAxisCount: 2,
         crossAxisSpacing: 16.0,

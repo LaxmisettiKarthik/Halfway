@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:RefApp/passwordreset.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +7,7 @@ import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:RefApp/navbar.dart';
 
-
 import 'Register.dart';
-
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -115,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
                       onPressed: () {
-                     //   setState(() {
+                        //   setState(() {
                         _showPassword = !_showPassword;
                         if (_showPassword) {
                           _isHandsUp!.change(false);
@@ -123,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                           _isHandsUp!.change(true);
                         }
 
-                      //   });
+                        //   });
                       },
                       icon: Icon(_showPassword
                           ? Icons.visibility_off
@@ -152,29 +151,28 @@ class _LoginPageState extends State<LoginPage> {
                     Timer(const Duration(seconds: 0), () async {
                       //  Navigator.pushNamed(context, "/HomePage");
                       var user = await _login();
-                      if (_emailController.text.isNotEmpty &&
-                          _passwordController.text.isNotEmpty &&
-                          user != "null") {
-                        _isChecking?.change(false);
-                        _isHandsUp?.change(false);
-                        _trigSuccess?.change(true);
-                        print(user);
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) =>  Navbar()),
-                        );
-                      } else {
+                      if (user == '') {
                         print(user);
                         _isChecking?.change(false);
                         _isHandsUp?.change(false);
                         _trigFail?.change(true);
+
                         Fluttertoast.showToast(
-                            msg: "Invalid login credentials",
+                            msg: "Invalid Credentials or verification pending",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.CENTER,
                             timeInSecForIosWeb: 5,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
                             fontSize: 16.0);
+                      } else {
+                        _isChecking?.change(false);
+                        _isHandsUp?.change(false);
+                        _trigSuccess?.change(true);
+                        print(user);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => Navbar()),
+                        );
                       }
                     });
                   },
@@ -187,6 +185,16 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 10),
                 SizedBox(
+                    width: size.width,
+                    child: TextButton(
+                      child: Text('Forgot Password?'),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const PasswordReset()));
+                      },
+                    )),
+                const SizedBox(height: 20),
+                SizedBox(
                   width: size.width,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -194,10 +202,10 @@ class _LoginPageState extends State<LoginPage> {
                       const Text('Don\'t have an account?'),
                       TextButton(
                         onPressed: () {
-                        //  setState(() {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => const RegisterPage()));
-                        //  });
+                          //  setState(() {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => RegisterPage()));
+                          //  });
                         },
                         child: const Text(
                           'Register',
@@ -224,11 +232,14 @@ class _LoginPageState extends State<LoginPage> {
               email: _emailController.text, password: _passwordController.text))
           .user;
 
-      if (user == null) {
-        return samp;
-      } else {
+      if (user != null && user.emailVerified == true) {
+        print(user.uid);
+
         await prefs.setString('UID', user.uid);
         return user.uid;
+      } else {
+        print(user!.uid);
+        return '';
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

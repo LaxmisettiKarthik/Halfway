@@ -48,10 +48,19 @@ import 'package:here_sdk/core.engine.dart';
 import 'package:here_sdk/core.errors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 /// The entry point of the application.
+/// 
+  late String message;
+Future<void> loadSharedPreferences() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  // Access and utilize shared preferences data here
+  message = prefs.getString('UID')!;
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   _initializeHERESDK();
@@ -59,7 +68,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+ loadSharedPreferences().then((_) {
+    runApp(MyApp());
+  });
+  
 }
 
 void _initializeHERESDK() async {
@@ -87,6 +99,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+ 
   @override
   void dispose() async{
     SdkContext.release();
@@ -110,7 +123,10 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => CustomMapStyleSettings()),
       ],
       child: MaterialApp(
-        home: LoginPage(),
+        debugShowCheckedModeBanner: false,
+        home: (message == "")
+                    ? LoginPage() :
+                    Navbar(),
         localizationsDelegates: [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,

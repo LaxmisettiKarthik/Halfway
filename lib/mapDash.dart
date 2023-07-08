@@ -76,6 +76,7 @@ class _DragBarState extends State<DragBar> {
       debugShowCheckedModeBanner: false,
       home: Builder(builder: (context) {
         return Scaffold(
+          extendBody: true,
           body: DraggableBottomSheet(
             minExtent: 30,
             useSafeArea: false,

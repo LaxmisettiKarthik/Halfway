@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:here_sdk/core.dart';
 import 'package:here_sdk/core.engine.dart';
-import 'package:here_sdk/core.errors.dart';
 import 'package:here_sdk/mapview.dart';
 import 'CameraExample.dart';
 import '../../home.dart';
@@ -19,8 +17,7 @@ class _CameraState extends State<Camera> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return  Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
@@ -42,7 +39,7 @@ class _CameraState extends State<Camera> {
             ),
           ],
         ),
-      ),
+      
     );
   }
 

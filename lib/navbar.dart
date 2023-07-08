@@ -1,10 +1,13 @@
+import 'package:RefApp/profile.dart';
 import 'package:RefApp/sample.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:sweet_nav_bar/sweet_nav_bar.dart';
 import 'home.dart';
 import 'mapDash.dart';
-import 'landing_screen.dart';
-//import 'landing_screen.dart';
+import 'appDashboard.dart';
+import 'notifications.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -16,62 +19,28 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int _page = 0;
   final List<Widget> _children = [
-    LandingScreen(),
-    DragBar(),
-    HomePage(),
+    AppDashboard(),
+    RegistrationPage(),
+    Notifications(),
   ];
-  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Dashboard")),
-        drawer: Drawer(
-          child: ListView(
-            children: [
-              ListTile(
-                  title: const Text("Profile"),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (_) => const Sample()),
-                    );
-                  }),
-                  ListTile(
-                  title: const Text("Profile"),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (_) => const Sample()),
-                    );
-                  }),
-              ListTile(
-                  title: const Text("Update Profile"),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) =>  Sample()),
-                    );
-                  }),
-            ],
-          ),
-        ),
-        bottomNavigationBar: CurvedNavigationBar(
-          key: _bottomNavigationKey,
-          backgroundColor: Colors.black,
-          items: const <Widget>[
-            Icon(
-              Icons.map,
-              size: 30,
-              color: Colors.purple,
+      extendBody: true,
+        bottomNavigationBar:DotNavigationBar(
+          currentIndex: _page,          
+          items: [
+          DotNavigationBarItem(
+              icon: Icon(Icons.home),
+              selectedColor: Colors.black,
             ),
-            Icon(
-              Icons.home,
-              size: 30,
-              color: Colors.purple,
+          DotNavigationBarItem(
+              icon: Icon(Icons.person),
+              selectedColor: Colors.black,
             ),
-            Icon(
-              Icons.dashboard,
-              size: 30,
-              color: Colors.purple,
+           DotNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              selectedColor: Colors.black,
             ),
           ],
           onTap: (index) {
@@ -80,6 +49,7 @@ class _NavbarState extends State<Navbar> {
             });
           },
         ),
+       
         body: _children[_page]);
   }
 }

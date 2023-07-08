@@ -19,8 +19,7 @@ class _TrafficState extends State<Traffic> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text('HERE SDK - Traffic Example'),
           leading: IconButton(
@@ -43,7 +42,7 @@ class _TrafficState extends State<Traffic> {
             ),
           ],
         ),
-      ),
+      
     );
   }
 

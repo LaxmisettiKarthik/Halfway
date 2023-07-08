@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:here_sdk/core.dart';
-import 'package:here_sdk/core.engine.dart';
-import 'package:here_sdk/core.errors.dart';
+
 import 'package:here_sdk/mapview.dart';
 
 import '../../home.dart';
@@ -19,8 +16,7 @@ class _RasterLayersState extends State<RasterLayers> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return  Scaffold(
         appBar: AppBar(
           title: Text('Custom Raster Layers'),
            leading: IconButton(
@@ -43,7 +39,7 @@ class _RasterLayersState extends State<RasterLayers> {
             ),
           ],
         ),
-      ),
+      
     );
   }
 
