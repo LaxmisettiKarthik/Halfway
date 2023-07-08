@@ -9,7 +9,7 @@ import 'Login.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,8 @@ class RegisterPage extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.36),
+                  top: MediaQuery.of(context).size.height * 0.36,
+                ),
                 height: 900,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.vertical(
@@ -53,20 +54,22 @@ class RegisterPage extends StatelessWidget {
                             child: const Text(
                               "Register here!",
                               style: TextStyle(
-                                  fontSize: 40, fontWeight: FontWeight.bold),
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
                     Container(
                       padding:
                           const EdgeInsets.only(top: 35, left: 30, right: 30),
-                      child: Column(children: <Widget>[
-                        TextField(
-                          controller: _emailController,
-                          decoration: const InputDecoration(
-                              alignLabelWithHint: true,
+                      child: Column(
+                        children: <Widget>[
+                          TextField(
+                            controller: _emailController,
+                            decoration: const InputDecoration(
                               labelText: "Email",
                               labelStyle: TextStyle(
                                 fontFamily: 'Monsterrat',
@@ -75,15 +78,15 @@ class RegisterPage extends StatelessWidget {
                               ),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green),
-                              )),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextField(
-                          controller: _passwordController,
-                          decoration: const InputDecoration(
-                              alignLabelWithHint: true,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextField(
+                            controller: _passwordController,
+                            decoration: const InputDecoration(
                               labelText: "Password",
                               labelStyle: TextStyle(
                                 fontFamily: 'Monsterrat',
@@ -92,16 +95,16 @@ class RegisterPage extends StatelessWidget {
                               ),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green),
-                              )),
-                          obscureText: true,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextField(
-                          controller: _cpasswordController,
-                          decoration: const InputDecoration(
-                              alignLabelWithHint: true,
+                              ),
+                            ),
+                            obscureText: true,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextField(
+                            controller: _cpasswordController,
+                            decoration: const InputDecoration(
                               labelText: "Confirm Password",
                               labelStyle: TextStyle(
                                 fontFamily: 'Monsterrat',
@@ -110,67 +113,69 @@ class RegisterPage extends StatelessWidget {
                               ),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green),
-                              )),
-                          obscureText: true,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          height: 60,
-                          child: ElevatedButton(
+                              ),
+                            ),
+                            obscureText: true,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ElevatedButton(
                             onPressed: () async {
-                              final registration = await _register();
-                              if (registration==true) {
+                              final reg = await _register();
+                              if (reg) {
                                 Fluttertoast.showToast(
-                                    msg: "Verification Email is sent!!",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 5,
-                                    backgroundColor: Colors.black,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
+                                  msg: "Verification Email is sent!!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 5,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "Try again!!!",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 5,
-                                    backgroundColor: Colors.black,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
+                                  msg: "Try again!!!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 5,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
                               }
                             },
                             child: const Text('Sign Up'),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (_) => const LoginPage()),
-                                );
-                              },
-                              child: const Text(
-                                'Back to Login',
-                                style: TextStyle(
-                                  color: Colors.blueGrey,
-                                  fontFamily: 'Monsterrat',
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.underline,
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => const LoginPage(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Back to Login',
+                                  style: TextStyle(
+                                    color: Colors.blueGrey,
+                                    fontFamily: 'Monsterrat',
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline,
+                                  ),
                                 ),
                               ),
-                            )
-                          ],
-                        )
-                      ]),
-                    )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -205,11 +210,11 @@ Widget _appBar(BuildContext context, ColorAnimated colorAnimated) {
     actions: [
       IconButton(
         onPressed: () {},
-        icon: Icon(
+        icon: const Icon(
           Icons.favorite,
-          color: colorAnimated.color,
         ),
-      )
+        color: colorAnimated.color,
+      ),
     ],
   );
 }
@@ -217,29 +222,29 @@ Widget _appBar(BuildContext context, ColorAnimated colorAnimated) {
 final TextEditingController _emailController = TextEditingController();
 final TextEditingController _passwordController = TextEditingController();
 final TextEditingController _cpasswordController = TextEditingController();
-late final bool _success;
-late String _userEmail, _userid;
 
 Future<bool> _register() async {
-  if (_cpasswordController.text == _passwordController.text) {
-    final User? user = (await _auth.createUserWithEmailAndPassword(
-            email: _emailController.text, password: _passwordController.text))
-        .user;
-    if (user != null && user.emailVerified== false) {
-      await user.sendEmailVerification();
-      setState(() {
-        _success = true;
-        _userEmail = user.email!;
-        _userid = user.uid;
-      });
-    } else {
-      setState(() {
-        _success = false;
-        _userEmail = "";
-      });
-    }
+  if (_cpasswordController.text != _passwordController.text) {
+    return false; // Passwords don't match
   }
-  return _success;
-}
 
-void setState(Null Function() param0) {}
+  try {
+    final UserCredential userCredential =
+        await _auth.createUserWithEmailAndPassword(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    final User? user = userCredential.user;
+    if (user != null) {
+      await user.sendEmailVerification();
+      return true; // Registration success
+    } else {
+      return false;
+    }
+  } catch (e) {
+    print(e.toString());
+  }
+
+  return false; // Registration failed or email is already verified
+}

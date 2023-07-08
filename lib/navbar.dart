@@ -26,21 +26,24 @@ class _NavbarState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
-        bottomNavigationBar:DotNavigationBar(
-          currentIndex: _page,          
+        extendBody: true,
+        bottomNavigationBar: DotNavigationBar(
+          currentIndex: _page,
           items: [
-          DotNavigationBarItem(
+            DotNavigationBarItem(
               icon: Icon(Icons.home),
               selectedColor: Colors.black,
+              unselectedColor: Colors.grey,
             ),
-          DotNavigationBarItem(
+            DotNavigationBarItem(
               icon: Icon(Icons.person),
               selectedColor: Colors.black,
+              unselectedColor: Colors.grey,
             ),
-           DotNavigationBarItem(
+            DotNavigationBarItem(
               icon: Icon(Icons.notifications),
               selectedColor: Colors.black,
+              unselectedColor: Colors.grey,
             ),
           ],
           onTap: (index) {
@@ -49,7 +52,6 @@ class _NavbarState extends State<Navbar> {
             });
           },
         ),
-       
         body: _children[_page]);
   }
 }
