@@ -1,13 +1,13 @@
 import 'dart:async';
-import 'package:RefApp/passwordreset.dart';
+import 'package:RefApp/ui/auth/Register.dart';
+import 'package:RefApp/ui/dashboard/navbar.dart';
+import 'package:RefApp/ui/auth/passwordreset.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:RefApp/navbar.dart';
 
-import 'Register.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -187,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text('Forgot Password?'),
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => const PasswordReset()));
+                            builder: (_) => const PasswordResetPage()));
                       },
                     )),
                 const SizedBox(height: 20),

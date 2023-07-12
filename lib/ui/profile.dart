@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:RefApp/ui/dashboard/navbar.dart';
 import 'package:path/path.dart' as Path;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'navbar.dart';
 
 final db = FirebaseFirestore.instance;
 final storage = FirebaseStorage.instance;
@@ -50,7 +50,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _numberController = TextEditingController();
-  late final bool _success;
   void addFormDataToFirestore(dataurl) async {
     print(dataurl);
     final SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -59,6 +59,7 @@ dependencies:
   cloud_firestore: ^4.8.2
   image_picker: ^1.0.0
   firebase_storage: ^11.2.4
+  lottie: ^2.4.0
 
   # The following adds the HERE SDK for Flutter plugin folder to your application.
   here_sdk:
@@ -81,6 +82,7 @@ flutter:
 
   assets:
     - assets/
+    - assets/lottie/
     - assets/maneuvers/dark/
     - assets/maneuvers/light/
     - assets/maneuvers/dark/png/

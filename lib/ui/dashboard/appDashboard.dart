@@ -1,4 +1,5 @@
-import 'package:RefApp/profile.dart';
+import 'package:RefApp/landing_screen.dart';
+import 'package:RefApp/ui/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:RefApp/components/camera/camera.dart';
 import 'package:RefApp/components/carto_poi_picking/cartopick.dart';
@@ -8,7 +9,6 @@ import 'package:RefApp/components/publicTransit/transit.dart';
 import 'package:RefApp/components/rasterlayers/rasterlayer.dart';
 import 'package:RefApp/components/spacialaudio/spacialaudio.dart';
 import 'package:RefApp/components/traffic.dart/traffic.dart';
-import 'landing_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

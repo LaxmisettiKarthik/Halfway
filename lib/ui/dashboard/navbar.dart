@@ -1,13 +1,7 @@
-import 'package:RefApp/profile.dart';
-import 'package:RefApp/sample.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:RefApp/ui/dashboard/notifications.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:sweet_nav_bar/sweet_nav_bar.dart';
-import 'home.dart';
-import 'mapDash.dart';
 import 'appDashboard.dart';
-import 'notifications.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -20,7 +14,6 @@ class _NavbarState extends State<Navbar> {
   int _page = 0;
   final List<Widget> _children = [
     AppDashboard(),
-    RegistrationPage(),
     Notifications(),
   ];
   @override
@@ -35,11 +28,7 @@ class _NavbarState extends State<Navbar> {
               selectedColor: Colors.black,
               unselectedColor: Colors.grey,
             ),
-            DotNavigationBarItem(
-              icon: Icon(Icons.person),
-              selectedColor: Colors.black,
-              unselectedColor: Colors.grey,
-            ),
+           
             DotNavigationBarItem(
               icon: Icon(Icons.notifications),
               selectedColor: Colors.black,

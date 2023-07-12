@@ -17,8 +17,9 @@
  * License-Filename: LICENSE
  */
 
-import 'package:RefApp/Login.dart';
-import 'package:RefApp/navbar.dart';
+
+import 'package:RefApp/ui/auth/Login.dart';
+import 'package:RefApp/ui/dashboard/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -54,11 +55,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// The entry point of the application.
 /// 
-  late String message;
+late String message;
 Future<void> loadSharedPreferences() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
+ SharedPreferences prefs = await SharedPreferences.getInstance();
   // Access and utilize shared preferences data here
-  message = prefs.getString('UID')!;
+  String? uid = prefs.getString('UID');
+  message = uid ?? ""; 
 }
 
 void main() async {
@@ -68,20 +70,25 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
- loadSharedPreferences().then((_) {
-    runApp(MyApp());
-  });
-  
+ runApp(MyApp());
+  await loadSharedPreferences();
+   
 }
 
 void _initializeHERESDK() async {
   // Needs to be called before accessing SDKOptions to load necessary libraries.
   SdkContext.init(IsolateOrigin.main);
 
-  // Set your credentials for the HERE SDK.
+  //Set your credentials for the HERE SDK.
+
   String accessKeyId = "vCEflHpSMJUnE89kLwahvA";
   String accessKeySecret =
       "g6Cm2B47pu-nm1HMWyQwaXxJiCUKl4XsCQuCPUZLVjgm4TIBeJf7T-xbMNITvr1N6OK5F7Q--tbK9rtIMCgqMw";
+  
+  // String accessKeyId = "PS3nutmYV7QHFvyJVR5KWA";
+  // String accessKeySecret =
+  //     "Rw9E4To4O5wlI2RuuDgEbYqQ4QzfxIxW1dQPL3X_dnSTOYqx5kRIUlFiSYG_eb5bre7ovcoLQaRM-6C5JZ0Zgg";
+  
   SDKOptions sdkOptions =
       SDKOptions.withAccessKeySecret(accessKeyId, accessKeySecret);
 
@@ -124,11 +131,11 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: 
-      //  (message == "")
-                    ?
-                     LoginPage() :
-                    //Navbar(),
+        home: (message == "")?
+                    LoginPage() 
+                     :
+                    Navbar(),
+                    //LandingScreen(),
         localizationsDelegates: [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
