@@ -55,7 +55,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// The entry point of the application.
 /// 
-late String message;
+String message="";
 Future<void> loadSharedPreferences() async {
  SharedPreferences prefs = await SharedPreferences.getInstance();
   // Access and utilize shared preferences data here
